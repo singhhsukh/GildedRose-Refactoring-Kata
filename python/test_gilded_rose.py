@@ -134,6 +134,25 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(items[0].quality, 18)
 
+    def test_conjured_item_decreases_in_quality(self):
+        """
+        Test that a regular item decreases in quality by 1 as its sell_in decreases.
+        """
+        items = [Item("Conjured", 10, 20)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(items[0].quality, 18)
+        self.assertEqual(items[0].sell_in, 9)
+
+    def test_conjured_item_quality_decreases_twice_after_sell_in(self):
+        """
+        Test that a regular item decreases in quality by 2 when sell_in is 0 or less.
+        """
+        items = [Item("Conjured", 0, 20)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(items[0].quality, 16)
+
     def test_quality_never_negative(self):
         """
         Test that the quality of an item never becomes negative.
